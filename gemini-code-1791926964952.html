@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Telling Today | Daily Oracle & Decision Wheel</title>
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Fortune Telling Today - Daily Oracle & Decision Wheel">
+    <meta property="og:description" content="Discover your daily fortune and let the Oracle decide your lunch today!">
+    <meta property="og:url" content="https://fortune-telling.today">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fortune Telling Today - Daily Oracle & Decision Wheel">
+    <meta name="twitter:description" content="Discover your daily fortune and let the Oracle decide your lunch today!">
+
+    <!-- Google Fonts: JetBrains Mono & Inter for the Mystic Tech vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #0b0914;
+            --bg-radial: #1a1230;
+            --card-bg: rgba(24, 19, 42, 0.78);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-pink: #ec4899;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff5e3a;
+            --accent-blue: #4f46e5;
+            --oracle-gradient: linear-gradient(90deg, #ff5e3a 0%, #ec4899 50%, #4f46e5 100%);
+            --pill-purple: #9370db;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at 50% 0%, var(--bg-radial) 0%, var(--bg-deep) 75%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 15px 50px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background twinkling stars decoration */
+        body::before {
+            content: "✦  ✧      ✦         ✧    ✦";
+            position: fixed;
+            top: 8%;
+            left: 10%;
+            right: 10%;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 1.2rem;
+            letter-spacing: 3rem;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(236, 72, 153, 0.08);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Top Navigation Bar */
+        .brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .brand-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--oracle-gradient);
+            font-size: 0.9rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-switch-btn {
+            background: rgba(168, 85, 247, 0.2);
+            color: #e9d5ff;
+            border: 1px solid rgba(168, 85, 247, 0.45);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lang-switch-btn:hover {
+            background: rgba(168, 85, 247, 0.35);
+            transform: translateY(-1px);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Hero Banner Heading */
+        .hero-banner {
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .hero-badge span.tag-new {
+            color: #c084fc;
+            font-weight: 700;
+        }
+
+        .hero-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(90deg, #ff5e3a, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Category Switch Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            padding: 9px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: rgba(236, 72, 153, 0.4);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(90deg, rgba(236, 72, 153, 0.25), rgba(79, 70, 229, 0.25));
+            color: #ffffff;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.25);
+        }
+
+        /* Wheel Section & Sacred Geometry Frame */
+        .wheel-section {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px dashed var(--card-border);
+            border-bottom: 1px dashed var(--card-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 290px;
+            height: 290px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sacred geometry rotating outer ring inspired by reference image */
+        .sacred-geometry {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 320px;
+            height: 320px;
+            pointer-events: none;
+            animation: slowSpin 45s linear infinite;
+            opacity: 0.65;
+        }
+
+        @keyframes slowSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .pie-chart {
+            width: 270px;
+            height: 270px;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.2), inset 0 0 15px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            z-index: 2;
+        }
+
+        .wheel-text {
+            font-size: 3.4px;
+            font-weight: 700;
+            fill: #ffffff;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.85);
+            pointer-events: none;
+        }
+
+        /* Rotating Pointer */
+        .pointer-pivot {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 270px;
+            height: 270px;
+            pointer-events: none;
+            transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1);
+            transform-origin: center center;
+            z-index: 3;
+        }
+
+        .pointer-arrow {
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-top: 24px solid #ff5e3a;
+            filter: drop-shadow(0 0 8px rgba(255, 94, 58, 0.9));
+        }
+
+        .pointer-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--oracle-gradient);
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(236, 72, 153, 0.8);
+        }
+
+        .num-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #c084fc;
+            margin: 10px 0 4px 0;
+            min-height: 32px;
+        }
+
+        .result-display {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            min-height: 30px;
+            color: #fbbf24;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 8px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Main CTA Button matching "Ask the Oracle Now" */
+        button.main-btn {
+            background: var(--oracle-gradient);
+            color: white;
+            border: none;
+            padding: 15px 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            border-radius: 999px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 380px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+        }
+
+        button.main-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
+        }
+
+        button.main-btn:disabled {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Social Share Section */
+        .share-section {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--card-border);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .share-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            flex: 1;
+            min-width: 125px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        .btn-x { background-color: #000000; }
+        .btn-fb { background-color: #1877f2; }
+        .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
+        /* Log Check-in Input Area */
+        .log-input-section {
+            margin-top: 22px;
+            display: none;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+
+        .log-input-section h3 {
+            margin-top: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: #f472b6;
+        }
+
+        .log-input-section label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select.full-input, input.full-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            margin: 8px 0 12px 0;
+            font-size: 0.95rem;
+            background: rgba(11, 9, 20, 0.8);
+            color: var(--text-main);
+            outline: none;
+        }
+
+        select.full-input:focus, input.full-input:focus {
+            border-color: var(--accent-pink);
+        }
+
+        /* Probability Bar */
+        .prob-bar-container {
+            margin: 15px 0 12px 0;
+        }
+
+        .prob-bar-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .prob-bar {
+            display: flex;
+            height: 24px;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .prob-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            transition: width 0.3s ease;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: 0 4px;
+        }
+
+        /* Rules Editor Details */
+        details {
+            margin-top: 22px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--card-border);
+        }
+
+        summary {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: #cbd5e1;
+            user-select: none;
+        }
+
+        .rule-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .rule-row input[type="number"] {
+            width: 55px;
+            padding: 6px;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            color: var(--text-main);
+        }
+
+        .rule-row input[type="text"] {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            background: rgba(0,0,0,0.5);
+            color: var(--text-main);
+        }
+
+        .btn-sm {
+            padding: 7px 13px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-add { background: var(--success-color); color: white; margin-top: 12px; }
+        .btn-del { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        .editor-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Monthly Calendar */
+        .calendar-section {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid var(--card-border);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .calendar-header button {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .calendar-header button:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .calendar-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #e2e8f0;
+        }
+
+        .calendar-summary {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #f472b6;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-day-head {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding-bottom: 6px;
+        }
+
+        .calendar-day-cell {
+            min-height: 52px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            font-size: 0.75rem;
+        }
+
+        .calendar-day-cell.empty {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .calendar-day-cell.today {
+            border-color: var(--accent-pink);
+            background: rgba(236, 72, 153, 0.12);
+        }
+
+        .calendar-day-cell.has-data {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .day-num {
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+        }
+
+        .day-food {
+            color: #f8fafc;
+            font-size: 0.65rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .day-cost {
+            color: #fbbf24;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-top: auto;
+        }
+
+        /* History Logs */
+        .log-section { margin-top: 25px; }
+        .log-section h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: #e2e8f0;
+        }
+        .log-list { list-style: none; padding: 0; }
+        .log-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--accent-pink);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Toast & IG Modal */
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e1b4b;
+            color: #ffffff;
+            border: 1px solid var(--accent-pink);
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: none;
+            white-space: nowrap;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: #151026;
+            border: 1px solid rgba(236, 72, 153, 0.35);
+            padding: 22px;
+            border-radius: 18px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-card h4 {
+            margin: 0 0 12px 0;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-main);
+        }
+
+        .card-preview-img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            margin-bottom: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.88rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Brand & Language Bar -->
+    <div class="brand-header">
+        <a href="https://fortune-telling.today" class="brand-title">
+            <span class="brand-icon">🔮</span>
+            <span>FortuneTelling.Today</span>
+        </a>
+        <div class="header-actions">
+            <button class="lang-switch-btn" onclick="toggleLanguage()" id="langBtn">
+                🌐 中文
+            </button>
+        </div>
+    </div>
+
+    <!-- Mystic Hero Banner -->
+    <div class="hero-banner">
+        <div class="hero-badge">
+            <span class="tag-new">✦ Daily</span>
+            <span id="heroBadgeText">Free to Start — Spin Now</span>
+        </div>
+        <h1 class="hero-title" id="heroTitle">
+            Discover <span class="highlight">Your Fortune</span> & Daily Decisions
+        </h1>
+        <p class="hero-subtitle" id="heroSubtitle">
+            Let the sacred wheel guide your everyday lunch choices and daily fortune readings.
+        </p>
+    </div>
+
+    <!-- 1. Category Tabs -->
+    <div class="category-tabs" id="categoryTabs"></div>
+
+    <!-- 2. Wheel & Sacred Geometry Area -->
+    <div class="wheel-section">
+        <div class="wheel-wrapper">
+            <!-- Sacred Geometry Outer SVG Ring -->
+            <svg class="sacred-geometry" viewBox="0 0 200 200">
+                <defs>
+                    <linearGradient id="mysticGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff5e3a" />
+                        <stop offset="50%" stop-color="#ec4899" />
+                        <stop offset="100%" stop-color="#4f46e5" />
+                    </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="url(#mysticGrad)" stroke-width="0.8" stroke-dasharray="4 4" />
+                <polygon points="100,6 181,147 19,147" fill="none" stroke="url(#mysticGrad)" stroke-width="0.7" opacity="0.6" />
+                <polygon points="100,194 181,53 19,53" fill="none" stroke="url(#mysticGrad)" stroke-width="0.7" opacity="0.6" />
+                <rect x="32" y="32" width="136" height="136" fill="none" stroke="url(#mysticGrad)" stroke-width="0.6" opacity="0.4" transform="rotate(45 100 100)" />
+            </svg>
+
+            <svg class="pie-chart" id="pieSvg" viewBox="0 0 100 100"></svg>
+            
+            <div class="pointer-pivot" id="pointerPivot">
+                <div class="pointer-arrow"></div>
+                <div class="pointer-center"></div>
+            </div>
+        </div>
+        
+        <div class="num-display" id="numDisplay">Lucky Number: --</div>
+        <div class="result-display" id="resultDisplay">Tap the button below to ask the Oracle</div>
+        <button id="rollBtn" class="main-btn" onclick="roll()">Ask the Oracle Now</button>
+
+        <!-- Social Media Share Bar -->
+        <div class="share-section" id="shareSection">
+            <div class="share-label" id="shareLabel">✨ Share your Oracle reading with friends:</div>
+            <div class="share-buttons">
+                <button class="share-btn btn-x" onclick="shareToX()">
+                    <span>𝕏</span> <span id="btnShareX">Post on X</span>
+                </button>
+                <button class="share-btn btn-fb" onclick="shareToFacebook()">
+                    <span>📘</span> <span>Facebook</span>
+                </button>
+                <button class="share-btn btn-ig" onclick="shareToInstagram()">
+                    <span>📸</span> <span id="btnShareIg">IG Story Card</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Check-in Log Input Section -->
+    <div class="log-input-section" id="logInputSection">
+        <h3 id="logInputTitle">Log Today's Decision</h3>
+        
+        <div id="selectionGroup">
+            <label id="lblActualSelect">What did you actually choose / eat?</label>
+            <select id="actualSelect" class="full-input" onchange="handleSelectChange(this.value)"></select>
+            
+            <div id="customInputContainer" style="display: none;">
+                <label id="lblCustomInput" style="color: #fbbf24;">Enter new item (auto-added to pool):</label>
+                <input type="text" id="customInput" class="full-input" placeholder="e.g. Pho / Laksa / Burger">
+            </div>
+
+            <label id="lblCostInput" style="margin-top: 5px; display: block;">How much did it cost? (AUD $):</label>
+            <input type="number" step="0.01" id="costInput" class="full-input" placeholder="e.g. 18.50 (Optional)">
+        </div>
+
+        <button class="main-btn" id="btnSaveLog" style="background: var(--success-color); box-shadow: none; margin-top: 5px;" onclick="saveLog()">Save Log</button>
+    </div>
+
+    <!-- 4. Custom Probability Rules Editor -->
+    <details id="rulesDetails">
+        <summary id="rulesSummary">⚙️ Customise Oracle Probability Rules</summary>
+        
+        <div class="prob-bar-container">
+            <div class="prob-bar-label">
+                <span id="probDistLabel">📊 Current Probability Distribution</span>
+                <span id="probTotalLabel">Total: 100%</span>
+            </div>
+            <div class="prob-bar" id="probBar"></div>
+        </div>
+
+        <div id="rulesContainer" style="margin-top: 10px;"></div>
+        <button class="btn-sm btn-add" id="btnAddRule" onclick="addRuleRow()">+ Add Option</button>
+        <div class="editor-actions">
+            <button class="btn-sm" id="btnRebalance" style="background:#f59e0b; color:#0b0914;" onclick="rebalanceWeightsUI()">Auto-Balance Weights</button>
+            <button class="btn-sm" id="btnSaveRules" style="background:#6366f1; color:white;" onclick="saveCurrentRules()">Save Rules</button>
+        </div>
+    </details>
+
+    <!-- 5. Monthly Expense Calendar -->
+    <div class="calendar-section" id="calendarSection">
+        <div class="calendar-header">
+            <button onclick="prevMonth()" id="btnPrevMonth">&lt; Prev</button>
+            <div class="calendar-title" id="calendarMonthTitle">Oct 2026</div>
+            <button onclick="nextMonth()" id="btnNextMonth">Next &gt;</button>
+        </div>
+        <div class="calendar-summary" id="calendarSummary">Monthly Total: $0.00 AUD</div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <!-- 6. History Logs -->
+    <div class="log-section">
+        <h3 id="historyTitle">Oracle History Logs</h3>
+        <ul class="log-list" id="logList"></ul>
+    </div>
+</div>
+
+<!-- Instagram Share Card Modal -->
+<div class="modal-overlay" id="igModal" onclick="if(event.target===this) closeIgModal()">
+    <div class="modal-card">
+        <h4 id="igModalTitle">📸 Instagram Oracle Card</h4>
+        <img id="igCardPreview" class="card-preview-img" alt="Share Card">
+        <div id="igModalHint" style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+            Caption copied! Save the image or share directly to your IG Story / Feed:
+        </div>
+        <div class="modal-actions">
+            <button id="btnDownloadCard" style="background: var(--oracle-gradient); color: white;" onclick="downloadOrNativeShareCard()">💾 Save / Share Image</button>
+            <button id="btnCloseModal" style="background: rgba(255,255,255,0.1); color: var(--text-main);" onclick="closeIgModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Canvas for IG Story Card Generation -->
+<canvas id="shareCanvas" width="800" height="1000" style="display:none;"></canvas>
+
+<!-- Toast Notification -->
+<div class="toast-msg" id="toastMsg"></div>
+
+<script>
+    const SITE_URL = "https://fortune-telling.today";
+
+    // Vibrant Mystic Palette
+    const palette = [
+        '#ec4899', '#8b5cf6', '#ff5e3a', '#3b82f6', '#10b981', 
+        '#f59e0b', '#06b6d4', '#6366f1', '#f43f5e', '#84cc16'
+    ];
+
+    // Bilingual Dictionary (Default: English 'en', Switchable to 'zh')
+    const i18n = {
+        en: {
+            langToggle: "🌐 中文",
+            heroBadge: "Free to Start — Spin Now",
+            heroTitle: 'Discover <span class="highlight">Your Fortune</span> & Daily Decisions',
+            heroSubtitle: "Let the sacred wheel guide your everyday lunch choices and daily fortune readings.",
+            catNames: { lunch: "Lunch Oracle", fortune: "Daily Fortune" },
+            numPrefix: "Lucky Number: ",
+            readyPrompt: "Switched to: ",
+            spinning: "The Oracle wheel is spinning...",
+            resultPrefix: "Oracle: ",
+            askBtn: "Ask the Oracle Now",
+            decidedBtn: "Already Decided Today ✨",
+            shareTitle: "✨ Share your Oracle reading with friends:",
+            shareX: "Post on X",
+            shareIg: "IG Story Card",
+            logTitleLunch: "Log Today's Lunch",
+            logTitleFortune: "Log Today's Fortune",
+            lblActual: "What did you actually choose / eat?",
+            otherOption: "➕ Other (Not in pool, enter manually)",
+            lblCustom: "Enter new item (auto-added to pool):",
+            customPlaceholder: "e.g. Pho / Laksa / Burger",
+            lblCost: "How much did it cost? (AUD $):",
+            costPlaceholder: "e.g. 18.50 (Optional)",
+            saveLogBtn: "Save Log",
+            rulesSummary: "⚙️ Customise Oracle Probability Rules",
+            probDist: "📊 Current Probability Distribution",
+            probTotal: "Total: 100%",
+            toWord: "to",
+            delBtn: "Delete",
+            addRuleBtn: "+ Add Option",
+            rebalanceBtn: "Auto-Balance Weights",
+            saveRulesBtn: "Save Rules",
+            prevMonth: "< Prev",
+            nextMonth: "Next >",
+            monthlyTotal: "Monthly Spend: $",
+            weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            historyTitle: "Oracle History Logs",
+            rolledWord: "Rolled",
+            actualWord: "Actual",
+            igModalTitle: "📸 Instagram Oracle Card",
+            igModalHint: "Caption copied! Save the image or share directly to your IG Story / Feed:",
+            btnDownload: "💾 Save / Share Image",
+            btnClose: "Close",
+            toastFb: "📋 Caption copied! Paste it directly in your Facebook post.",
+            toastIgSaved: "✅ Card downloaded! Ready to post on Instagram.",
+            toastLogSaved: "✅ Today's log saved!",
+            toastRulesSaved: "✅ Rules validated and saved!",
+            newOptionDefault: "New Option",
+            cardSubtitle: "ANGEL & ORACLE READING",
+            cardNumberLabel: "LUCKY NUMBER",
+            cardCta: "🔮 Discover your fortune today"
+        },
+        zh: {
+            langToggle: "🌐 EN",
+            heroBadge: "免费开启 — 立即抽取",
+            heroTitle: '探索 <span class="highlight">今日运势</span> 与每日决策',
+            heroSubtitle: "让神秘星盘指引你的每日午餐选择与今日运势签文。",
+            catNames: { lunch: "午餐决定", fortune: "今日运势" },
+            numPrefix: "抽中数字: ",
+            readyPrompt: "已切换至：",
+            spinning: "命运指针旋转中...",
+            resultPrefix: "结果：",
+            askBtn: "天意决定",
+            decidedBtn: "今天已经决定过啦 ✨",
+            shareTitle: "✨ 分享今日天意结果至社交媒体：",
+            shareX: "分享到 X",
+            shareIg: "IG 分享卡",
+            logTitleLunch: "打卡今日午餐",
+            logTitleFortune: "打卡今日运势",
+            lblActual: "实际吃了/选择了：",
+            otherOption: "➕ 其他（不在Pool中，手动输入）",
+            lblCustom: "输入新美食名称（自动存入Pool）：",
+            customPlaceholder: "如：螺蛳粉 / 麻辣香锅",
+            lblCost: "花了多少钱 (AUD $)：",
+            costPlaceholder: "如：18.50 (可留空)",
+            saveLogBtn: "保存日志",
+            rulesSummary: "⚙️ 自定义该场景的概率规则",
+            probDist: "📊 当前概率分布比重",
+            probTotal: "总计: 100%",
+            toWord: "至",
+            delBtn: "删除",
+            addRuleBtn: "+ 添加新选项",
+            rebalanceBtn: "一键平均分配权重",
+            saveRulesBtn: "保存规则配置",
+            prevMonth: "< 上个月",
+            nextMonth: "下个月 >",
+            monthlyTotal: "本月累计花费: $",
+            weekDays: ['日', '一', '二', '三', '四', '五', '六'],
+            months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            historyTitle: "历史日志",
+            rolledWord: "抽中",
+            actualWord: "实际吃",
+            igModalTitle: "📸 Instagram 专属分享卡",
+            igModalHint: "已自动复制分享文案！保存图片或直接调用系统分享发布到 IG：",
+            btnDownload: "💾 保存 / 分享图片",
+            btnClose: "关闭",
+            toastFb: "📋 抽签文案已复制！可在 Facebook 弹窗中直接粘贴",
+            toastIgSaved: "✅ 卡片已下载，快去上传到 Instagram 吧！",
+            toastLogSaved: "✅ 今日打卡日志已保存！",
+            toastRulesSaved: "✅ 规则校验通过并保存！",
+            newOptionDefault: "新选项",
+            cardSubtitle: "今日天意与运势签",
+            cardNumberLabel: "天意数字",
+            cardCta: "🔮 测测你的今日天意"
+        }
+    };
+
+    // Built-in bilingual translation map for default rule options
+    const optionTranslations = {
+        "肯德基 / 麦当劳": { en: "KFC / Macca's", zh: "肯德基 / 麦当劳" },
+        "KFC / Macca's": { en: "KFC / Macca's", zh: "肯德基 / 麦当劳" },
+        "日式拉面": { en: "Japanese Ramen", zh: "日式拉面" },
+        "Japanese Ramen": { en: "Japanese Ramen", zh: "日式拉面" },
+        "HSP (Halal Snack Pack)": { en: "HSP (Halal Snack Pack)", zh: "HSP (Halal Snack Pack)" },
+        "Hot Bar / 麻辣烫": { en: "Hot Bar / Malatang", zh: "Hot Bar / 麻辣烫" },
+        "Hot Bar / Malatang": { en: "Hot Bar / Malatang", zh: "Hot Bar / 麻辣烫" },
+        "新口味探店盲盒": { en: "Mystery New Spot", zh: "新口味探店盲盒" },
+        "Mystery New Spot": { en: "Mystery New Spot", zh: "新口味探店盲盒" },
+        "【大吉】宜尝试新事物！": { en: "[Great Blessing] Try something new!", zh: "【大吉】宜尝试新事物！" },
+        "[Great Blessing] Try something new!": { en: "[Great Blessing] Try something new!", zh: "【大吉】宜尝试新事物！" },
+        "【中吉】顺利平稳的一天。": { en: "[Good Luck] Smooth & steady day.", zh: "【中吉】顺利平稳的一天。" },
+        "[Good Luck] Smooth & steady day.": { en: "[Good Luck] Smooth & steady day.", zh: "【中吉】顺利平稳的一天。" },
+        "【小吉】保持好心情，多喝水。": { en: "[Small Luck] Stay positive & hydrated.", zh: "【小吉】保持好心情，多喝水。" },
+        "[Small Luck] Stay positive & hydrated.": { en: "[Small Luck] Stay positive & hydrated.", zh: "【小吉】保持好心情，多喝水。" },
+        "【末吉】注意休息，防疲劳。": { en: "[Mild Luck] Take a break & recharge.", zh: "【末吉】注意休息，防疲劳。" },
+        "[Mild Luck] Take a break & recharge.": { en: "[Mild Luck] Take a break & recharge.", zh: "【末吉】注意休息，防疲劳。" }
+    };
+
+    function localizeOption(text) {
+        if (!text) return "";
+        if (optionTranslations[text] && optionTranslations[text][currentLang]) {
+            return optionTranslations[text][currentLang];
+        }
+        return text;
+    }
+
+    const defaultCategories = {
+        lunch: {
+            name: "Lunch Oracle",
+            maxNum: 100,
+            avoidYesterdayRepeat: true,
+            hasActualSelection: true, 
+            rules: [
+                { min: 1, max: 20, result: "KFC / Macca's" },
+                { min: 21, max: 40, result: "Japanese Ramen" },
+                { min: 41, max: 60, result: "HSP (Halal Snack Pack)" },
+                { min: 61, max: 80, result: "Hot Bar / Malatang" },
+                { min: 81, max: 100, result: "Mystery New Spot" }
+            ]
+        },
+        fortune: {
+            name: "Daily Fortune",
+            maxNum: 100,
+            avoidYesterdayRepeat: false,
+            hasActualSelection: false, 
+            rules: [
+                { min: 1, max: 10, result: "[Great Blessing] Try something new!" },
+                { min: 11, max: 40, result: "[Good Luck] Smooth & steady day." },
+                { min: 41, max: 80, result: "[Small Luck] Stay positive & hydrated." },
+                { min: 81, max: 100, result: "[Mild Luck] Take a break & recharge." }
+            ]
+        }
+    };
+
+    // Default to 'en' for Australian audience
+    let currentLang = localStorage.getItem('appLang') || 'en';
+    let categories = {};
+    let currentCatKey = 'lunch';
+    let currentRoll = null;
+    let currentSuggestion = "";
+    let currentRotation = 0;
+
+    let currentCalYear = new Date().getFullYear();
+    let currentCalMonth = new Date().getMonth();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        applyTranslationsToRules();
+        applyStaticTranslations();
+        renderTabs();
+        switchCategory(currentCatKey);
+    });
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'zh' : 'en';
+        localStorage.setItem('appLang', currentLang);
+        document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
+        
+        applyTranslationsToRules();
+        saveData();
+        applyStaticTranslations();
+        renderTabs();
+        switchCategory(currentCatKey);
+    }
+
+    function applyTranslationsToRules() {
+        Object.keys(categories).forEach(catKey => {
+            if (i18n[currentLang].catNames[catKey]) {
+                categories[catKey].name = i18n[currentLang].catNames[catKey];
+            }
+            categories[catKey].rules.forEach(r => {
+                r.result = localizeOption(r.result);
+            });
+        });
+        if (currentSuggestion) {
+            currentSuggestion = localizeOption(currentSuggestion);
+        }
+    }
+
+    function applyStaticTranslations() {
+        const t = i18n[currentLang];
+        document.getElementById('langBtn').innerText = t.langToggle;
+        document.getElementById('heroBadgeText').innerText = t.heroBadge;
+        document.getElementById('heroTitle').innerHTML = t.heroTitle;
+        document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+        document.getElementById('shareLabel').innerText = t.shareTitle;
+        document.getElementById('btnShareX').innerText = t.shareX;
+        document.getElementById('btnShareIg').innerText = t.shareIg;
+        document.getElementById('lblActualSelect').innerText = t.lblActual;
+        document.getElementById('lblCustomInput').innerText = t.lblCustom;
+        document.getElementById('customInput').placeholder = t.customPlaceholder;
+        document.getElementById('lblCostInput').innerText = t.lblCost;
+        document.getElementById('costInput').placeholder = t.costPlaceholder;
+        document.getElementById('btnSaveLog').innerText = t.saveLogBtn;
+        document.getElementById('rulesSummary').innerText = t.rulesSummary;
+        document.getElementById('probDistLabel').innerText = t.probDist;
+        document.getElementById('probTotalLabel').innerText = t.probTotal;
+        document.getElementById('btnAddRule').innerText = t.addRuleBtn;
+        document.getElementById('btnRebalance').innerText = t.rebalanceBtn;
+        document.getElementById('btnSaveRules').innerText = t.saveRulesBtn;
+        document.getElementById('btnPrevMonth').innerText = t.prevMonth;
+        document.getElementById('btnNextMonth').innerText = t.nextMonth;
+        document.getElementById('historyTitle').innerText = t.historyTitle;
+        document.getElementById('igModalTitle').innerText = t.igModalTitle;
+        document.getElementById('igModalHint').innerText = t.igModalHint;
+        document.getElementById('btnDownloadCard').innerText = t.btnDownload;
+        document.getElementById('btnCloseModal').innerText = t.btnClose;
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toastMsg');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3200);
+    }
+
+    function loadData() {
+        const saved = localStorage.getItem('appCategories');
+        if (saved) {
+            categories = JSON.parse(saved);
+            if (categories.lunch) categories.lunch.hasActualSelection = true;
+            if (categories.fortune) categories.fortune.hasActualSelection = false;
+        } else {
+            categories = JSON.parse(JSON.stringify(defaultCategories));
+        }
+    }
+
+    function saveData() {
+        localStorage.setItem('appCategories', JSON.stringify(categories));
+    }
+
+    function getTodayString() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function renderTabs() {
+        const tabsContainer = document.getElementById('categoryTabs');
+        tabsContainer.innerHTML = '';
+        Object.keys(categories).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${key === currentCatKey ? 'active' : ''}`;
+            btn.innerText = i18n[currentLang].catNames[key] || categories[key].name;
+            btn.onclick = () => switchCategory(key);
+            tabsContainer.appendChild(btn);
+        });
+    }
+
+    function switchCategory(key) {
+        currentCatKey = key;
+        renderTabs();
+        renderRulesEditor();
+        renderPieChart();
+        checkTodayStatus();
+        renderLogs();
+        renderCalendar();
+        
+        const calSection = document.getElementById('calendarSection');
+        calSection.style.display = categories[key].hasActualSelection ? 'block' : 'none';
+    }
+
+    function getResultFromNum(num, catKey) {
+        const rules = categories[catKey].rules;
+        for (let r of rules) {
+            if (num >= r.min && num <= r.max) {
+                return r.result;
+            }
+        }
+        return currentLang === 'en' ? "Undefined" : "未定义结果";
+    }
+
+    function renderPieChart() {
+        const svg = document.getElementById('pieSvg');
+        svg.innerHTML = '';
+        const rules = categories[currentCatKey].rules;
+        const total = categories[currentCatKey].maxNum || 100;
+
+        let cumulativePercent = 0;
+
+        rules.forEach((rule, idx) => {
+            const count = (rule.max - rule.min + 1);
+            const percent = count / total;
+            const color = palette[idx % palette.length];
+
+            const startPercent = cumulativePercent;
+            const endPercent = cumulativePercent + percent;
+            cumulativePercent += percent;
+
+            const [startX, startY] = getCoordinatesForPercent(startPercent - 0.25);
+            const [endX, endY] = getCoordinatesForPercent(endPercent - 0.25);
+
+            const largeArcFlag = percent > 0.5 ? 1 : 0;
+            const pathData = [
+                `M 50 50`,
+                `L ${startX} ${startY}`,
+                `A 50 50 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+                `Z`
+            ].join(' ');
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('fill', color);
+            path.setAttribute('stroke', 'rgba(11, 9, 20, 0.4)');
+            path.setAttribute('stroke-width', '0.4');
+            svg.appendChild(path);
+
+            if (percent > 0.03) {
+                const midPercent = (startPercent + percent / 2) - 0.25;
+                const textAngle = midPercent * 360;
+                const textRad = textAngle * Math.PI / 180;
+                const textX = 50 + 31 * Math.cos(textRad);
+                const textY = 50 + 31 * Math.sin(textRad);
+
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', textX);
+                text.setAttribute('y', textY);
+                text.setAttribute('class', 'wheel-text');
+                
+                let rotateDeg = textAngle;
+                if (rotateDeg > 90 && rotateDeg < 270) rotateDeg += 180;
+                else if (rotateDeg < -90 && rotateDeg > -270) rotateDeg += 180;
+                
+                text.setAttribute('transform', `rotate(${rotateDeg}, ${textX}, ${textY})`);
+
+                let label = localizeOption(rule.result);
+                const maxLen = currentLang === 'en' ? 11 : 7;
+                if (label.length > maxLen) label = label.substring(0, maxLen - 2) + '..';
+                text.textContent = label;
+
+                svg.appendChild(text);
+            }
+        });
+
+        renderProbBar();
+    }
+
+    function getCoordinatesForPercent(percent) {
+        const x = 50 + 50 * Math.cos(2 * Math.PI * percent);
+        const y = 50 + 50 * Math.sin(2 * Math.PI * percent);
+        return [x, y];
+    }
+
+    function renderProbBar() {
+        const barContainer = document.getElementById('probBar');
+        barContainer.innerHTML = '';
+        const rules = categories[currentCatKey].rules;
+        const total = categories[currentCatKey].maxNum || 100;
+
+        rules.forEach((rule, idx) => {
+            const count = Math.max(0, (rule.max - rule.min + 1));
+            const percent = ((count / total) * 100).toFixed(0);
+            const color = palette[idx % palette.length];
+
+            const seg = document.createElement('div');
+            seg.className = 'prob-segment';
+            seg.style.width = `${percent}%`;
+            seg.style.backgroundColor = color;
+            const localName = localizeOption(rule.result);
+            seg.title = `${localName}: ${percent}% (${rule.min}-${rule.max})`;
+            
+            if (percent >= 14) {
+                seg.innerText = `${localName} (${percent}%)`;
+            } else if (percent >= 5) {
+                seg.innerText = `${percent}%`;
+            }
+            
+            barContainer.appendChild(seg);
+        });
+    }
+
+    function checkTodayStatus() {
+        const t = i18n[currentLang];
+        const today = getTodayString();
+        const lastDate = localStorage.getItem(`lastRoll_${currentCatKey}`);
+        const btn = document.getElementById('rollBtn');
+        const pointer = document.getElementById('pointerPivot');
+        const shareSec = document.getElementById('shareSection');
+
+        if (lastDate === today) {
+            btn.disabled = true;
+            btn.innerText = t.decidedBtn;
+
+            const logs = JSON.parse(localStorage.getItem(`logs_${currentCatKey}`) || '[]');
+            const todayLog = logs.find(l => l.date === today);
+
+            if (!todayLog) {
+                const tempRollStr = localStorage.getItem(`todayTempRoll_${currentCatKey}`);
+                if (tempRollStr) {
+                    const temp = JSON.parse(tempRollStr);
+                    currentRoll = temp.num;
+                    currentSuggestion = localizeOption(temp.suggestion);
+
+                    restoreWheelAndDisplay(temp.num, currentSuggestion);
+                    showLogSectionUI(currentSuggestion);
+                    shareSec.style.display = 'block';
+                }
+            } else {
+                currentRoll = todayLog.num;
+                currentSuggestion = localizeOption(todayLog.actual || todayLog.suggested);
+                restoreWheelAndDisplay(todayLog.num, currentSuggestion);
+                document.getElementById('logInputSection').style.display = 'none';
+                shareSec.style.display = 'block';
+            }
+        } else {
+            btn.disabled = false;
+            btn.innerText = t.askBtn;
+            document.getElementById('numDisplay').innerText = `${t.numPrefix}--`;
+            const catTitle = t.catNames[currentCatKey] || categories[currentCatKey].name;
+            document.getElementById('resultDisplay').innerText = `${t.readyPrompt}${catTitle}`;
+            document.getElementById('logInputSection').style.display = 'none';
+            shareSec.style.display = 'none';
+            
+            pointer.style.transition = 'none';
+            pointer.style.transform = 'rotate(0deg)';
+            currentRotation = 0;
+        }
+    }
+
+    function restoreWheelAndDisplay(num, textResult) {
+        const t = i18n[currentLang];
+        const pointer = document.getElementById('pointerPivot');
+        document.getElementById('numDisplay').innerText = `${t.numPrefix}${num}`;
+        document.getElementById('resultDisplay').innerText = `${t.resultPrefix}${localizeOption(textResult)}`;
+
+        const cat = categories[currentCatKey];
+        const targetDegree = ((num - 0.5) / cat.maxNum) * 360;
+        pointer.style.transition = 'none';
+        pointer.style.transform = `rotate(${targetDegree}deg)`;
+        currentRotation = targetDegree;
+    }
+
+    function showLogSectionUI(suggestion) {
+        const t = i18n[currentLang];
+        const cat = categories[currentCatKey];
+        const selectionGroup = document.getElementById('selectionGroup');
+        const title = document.getElementById('logInputTitle');
+
+        if (cat.hasActualSelection) {
+            title.innerText = t.logTitleLunch;
+            selectionGroup.style.display = 'block';
+            setupSelectOptions(suggestion);
+        } else {
+            title.innerText = t.logTitleFortune;
+            selectionGroup.style.display = 'none';
+        }
+
+        document.getElementById('logInputSection').style.display = 'block';
+    }
+
+    function roll() {
+        const t = i18n[currentLang];
+        const cat = categories[currentCatKey];
+        const btn = document.getElementById('rollBtn');
+        btn.disabled = true;
+
+        const logs = JSON.parse(localStorage.getItem(`logs_${currentCatKey}`) || '[]');
+        let yesterdayActual = (cat.avoidYesterdayRepeat && logs.length > 0) ? localizeOption(logs[0].actual) : "";
+
+        let finalNum, suggestion, attempts = 0;
+        do {
+            finalNum = Math.floor(Math.random() * cat.maxNum) + 1;
+            suggestion = localizeOption(getResultFromNum(finalNum, currentCatKey));
+            attempts++;
+        } while (cat.avoidYesterdayRepeat && suggestion === yesterdayActual && attempts < 50);
+
+        currentRoll = finalNum;
+        currentSuggestion = suggestion;
+
+        const targetDegree = ((finalNum - 0.5) / cat.maxNum) * 360; 
+        const baseRounds = 5 * 360; 
+        
+        const currentMod = currentRotation % 360;
+        let diff = targetDegree - currentMod;
+        if (diff <= 0) diff += 360; 
+        
+        currentRotation += baseRounds + diff;
+
+        const pointer = document.getElementById('pointerPivot');
+        pointer.style.transition = 'transform 4s cubic-bezier(0.15, 0.85, 0.15, 1)';
+        pointer.style.transform = `rotate(${currentRotation}deg)`;
+
+        document.getElementById('resultDisplay').innerText = t.spinning;
+
+        const today = getTodayString();
+        localStorage.setItem(`lastRoll_${currentCatKey}`, today);
+        localStorage.setItem(`todayTempRoll_${currentCatKey}`, JSON.stringify({ num: finalNum, suggestion: suggestion }));
+
+        setTimeout(() => {
+            document.getElementById('numDisplay').innerText = `${i18n[currentLang].numPrefix}${finalNum}`;
+            document.getElementById('resultDisplay').innerText = `${i18n[currentLang].resultPrefix}${suggestion}`;
+            
+            showLogSectionUI(suggestion);
+            document.getElementById('shareSection').style.display = 'block';
+            btn.innerText = i18n[currentLang].decidedBtn;
+        }, 4000);
+    }
+
+    // --- Social Media Share Functions ---
+    function getShareCopyText() {
+        const catName = i18n[currentLang].catNames[currentCatKey] || categories[currentCatKey].name;
+        const emoji = currentCatKey === 'lunch' ? '🍱' : '🔮';
+        const localRes = localizeOption(currentSuggestion);
+        if (currentLang === 'en') {
+            return `${emoji} The Oracle has spoken! My [${catName}] roll today is #${currentRoll}: ${localRes} ✨\n👉 Ask the Oracle now: ${SITE_URL} #FortuneTellingToday`;
+        } else {
+            return `${emoji} 我在 Fortune Telling Today 的【${catName}】中抽到了数字 ${currentRoll}：${localRes}！✨\n👉 来测测你的今日天意：${SITE_URL} #FortuneTellingToday`;
+        }
+    }
+
+    function copyTextToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+    }
+
+    function shareToX() {
+        if (!currentRoll) return;
+        const catName = i18n[currentLang].catNames[currentCatKey] || categories[currentCatKey].name;
+        const emoji = currentCatKey === 'lunch' ? '🍱' : '🔮';
+        const localRes = localizeOption(currentSuggestion);
+        const text = currentLang === 'en'
+            ? `${emoji} My [${catName}] Oracle reading today: ${localRes} (Lucky #${currentRoll})! ✨\nDiscover your daily fortune:`
+            : `${emoji} 今日【${catName}】天意抽签结果：${localRes} (幸运数字: ${currentRoll})！✨\n来测测你的今日运势：`;
+        const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(SITE_URL)}&hashtags=FortuneTellingToday`;
+        window.open(xUrl, '_blank', 'width=600,height=450');
+    }
+
+    function shareToFacebook() {
+        if (!currentRoll) return;
+        const text = getShareCopyText();
+        copyTextToClipboard(text);
+        showToast(i18n[currentLang].toastFb);
+        
+        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SITE_URL)}&quote=${encodeURIComponent(text)}`;
+        setTimeout(() => {
+            window.open(fbUrl, '_blank', 'width=600,height=500');
+        }, 500);
+    }
+
+    // Mystic Dark Theme Instagram Story Card Generator
+    function shareToInstagram() {
+        if (!currentRoll) return;
+        const t = i18n[currentLang];
+        copyTextToClipboard(getShareCopyText());
+
+        const canvas = document.getElementById('shareCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 1. Deep Mystic Cosmic Background
+        const bgGrad = ctx.createRadialGradient(400, 200, 50, 400, 500, 700);
+        bgGrad.addColorStop(0, '#271745');
+        bgGrad.addColorStop(1, '#0b0914');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 800, 1000);
+
+        // 2. Outer Neon Gradient Border Card
+        const borderGrad = ctx.createLinearGradient(60, 80, 740, 920);
+        borderGrad.addColorStop(0, '#ff5e3a');
+        borderGrad.addColorStop(0.5, '#ec4899');
+        borderGrad.addColorStop(1, '#4f46e5');
+
+        ctx.fillStyle = 'rgba(20, 15, 36, 0.92)';
+        drawRoundRect(ctx, 60, 80, 680, 840, 32);
+        ctx.fill();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = borderGrad;
+        ctx.stroke();
+
+        // 3. Top Header & Date
+        const catTitle = t.catNames[currentCatKey] || categories[currentCatKey].name;
+        ctx.fillStyle = '#c084fc';
+        ctx.font = 'bold 24px "JetBrains Mono", monospace, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`✦ ${t.cardSubtitle} ✦`, 400, 145);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 24px "Inter", sans-serif';
+        ctx.fillText(`${getTodayString()}  ·  ${catTitle}`, 400, 190);
+
+        // 4. Sacred Geometry Circle around Lucky Number
+        ctx.strokeStyle = 'rgba(236, 72, 153, 0.35)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(400, 390, 135, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(236, 72, 153, 0.1)';
+        ctx.beginPath();
+        ctx.arc(400, 390, 115, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = 'bold 22px "JetBrains Mono", monospace, sans-serif';
+        ctx.fillText(t.cardNumberLabel, 400, 335);
+
+        ctx.fillStyle = '#ff5e3a';
+        ctx.font = 'bold 96px "JetBrains Mono", monospace, sans-serif';
+        ctx.fillText(`${currentRoll}`, 400, 445);
+
+        // 5. Oracle Result Text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 44px "Inter", -apple-system, sans-serif';
+        wrapText(ctx, localizeOption(currentSuggestion), 400, 620, 560, 60);
+
+        // 6. Bottom Pill Badge Watermark
+        ctx.fillStyle = borderGrad;
+        drawRoundRect(ctx, 200, 800, 400, 64, 32);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 26px "JetBrains Mono", monospace, sans-serif';
+        ctx.fillText('fortune-telling.today', 400, 841);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 22px "Inter", sans-serif';
+        ctx.fillText(t.cardCta, 400, 775);
+
+        const dataUrl = canvas.toDataURL('image/png');
+        document.getElementById('igCardPreview').src = dataUrl;
+        document.getElementById('igModal').style.display = 'flex';
+    }
+
+    function drawRoundRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        // Supports both English word wrapping and Chinese character wrapping
+        const isSpaceSeparated = text.includes(' ');
+        const units = isSpaceSeparated ? text.split(' ') : text.split('');
+        let line = '';
+        let currentY = y;
+
+        for (let i = 0; i < units.length; i++) {
+            const separator = (isSpaceSeparated && line !== '') ? ' ' : '';
+            const testLine = line + separator + units[i];
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && i > 0) {
+                ctx.fillText(line, x, currentY);
+                line = units[i];
+                currentY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, currentY);
+    }
+
+    function closeIgModal() {
+        document.getElementById('igModal').style.display = 'none';
+    }
+
+    async function downloadOrNativeShareCard() {
+        const canvas = document.getElementById('shareCanvas');
+        canvas.toBlob(async (blob) => {
+            const fileName = `oracle-${getTodayString()}.png`;
+            const file = new File([blob], fileName, { type: 'image/png' });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: 'Fortune Telling Today',
+                        text: getShareCopyText()
+                    });
+                    return;
+                } catch (err) {}
+            }
+
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            showToast(i18n[currentLang].toastIgSaved);
+        }, 'image/png');
+    }
+
+    // --- Check-in & Custom Rules Functions ---
+    function setupSelectOptions(defaultSuggestion) {
+        const select = document.getElementById('actualSelect');
+        select.innerHTML = '';
+        const rules = categories[currentCatKey].rules;
+        
+        rules.forEach(r => {
+            const localRes = localizeOption(r.result);
+            const opt = document.createElement('option');
+            opt.value = localRes;
+            opt.innerText = localRes;
+            if (localRes === localizeOption(defaultSuggestion)) opt.selected = true;
+            select.appendChild(opt);
+        });
+
+        const otherOpt = document.createElement('option');
+        otherOpt.value = "__OTHER__";
+        otherOpt.innerText = i18n[currentLang].otherOption;
+        select.appendChild(otherOpt);
+
+        if (!rules.some(r => localizeOption(r.result) === localizeOption(defaultSuggestion))) {
+            select.value = "__OTHER__";
+        }
+
+        handleSelectChange(select.value);
+    }
+
+    function handleSelectChange(value) {
+        const customContainer = document.getElementById('customInputContainer');
+        if (value === '__OTHER__') {
+            customContainer.style.display = 'block';
+            document.getElementById('customInput').value = '';
+            document.getElementById('customInput').focus();
+        } else {
+            customContainer.style.display = 'none';
+        }
+    }
+
+    function autoDistributeWeights(rulesList, targetMax = 100) {
+        const n = rulesList.length;
+        if (n === 0) return rulesList;
+
+        const step = Math.floor(targetMax / n);
+        let currentStart = 1;
+
+        for (let i = 0; i < n; i++) {
+            rulesList[i].min = currentStart;
+            if (i === n - 1) {
+                rulesList[i].max = targetMax;
+            } else {
+                rulesList[i].max = currentStart + step - 1;
+            }
+            currentStart = rulesList[i].max + 1;
+        }
+        return rulesList;
+    }
+
+    function saveLog() {
+        const t = i18n[currentLang];
+        const cat = categories[currentCatKey];
+        let finalActual = currentSuggestion;
+        let finalCost = 0;
+
+        if (cat.hasActualSelection) {
+            const selectVal = document.getElementById('actualSelect').value;
+            finalActual = selectVal;
+
+            if (selectVal === '__OTHER__') {
+                const customVal = document.getElementById('customInput').value.trim();
+                if (!customVal) return alert(currentLang === 'en' ? "Please enter a name!" : "请在文本框中输入具体的名称！");
+                
+                finalActual = customVal;
+                const exists = cat.rules.some(r => r.result.trim().toLowerCase() === customVal.toLowerCase());
+                if (!exists) {
+                    cat.rules.push({ min: 0, max: 0, result: customVal });
+                    autoDistributeWeights(cat.rules, cat.maxNum);
+                    saveData();
+                    renderRulesEditor();
+                    renderPieChart();
+                }
+            }
+
+            const costVal = parseFloat(document.getElementById('costInput').value);
+            finalCost = isNaN(costVal) ? 0 : Math.max(0, costVal);
+        }
+
+        currentSuggestion = finalActual;
+        document.getElementById('resultDisplay').innerText = `${t.resultPrefix}${finalActual}`;
+
+        const logs = JSON.parse(localStorage.getItem(`logs_${currentCatKey}`) || '[]');
+        logs.unshift({
+            date: getTodayString(),
+            num: currentRoll,
+            suggested: currentSuggestion,
+            actual: finalActual,
+            cost: finalCost
+        });
+
+        localStorage.setItem(`logs_${currentCatKey}`, JSON.stringify(logs));
+        localStorage.removeItem(`todayTempRoll_${currentCatKey}`);
+
+        document.getElementById('logInputSection').style.display = 'none';
+        document.getElementById('costInput').value = '';
+        
+        renderLogs();
+        renderCalendar();
+        showToast(t.toastLogSaved);
+    }
+
+    function renderLogs() {
+        const t = i18n[currentLang];
+        const cat = categories[currentCatKey];
+        const logs = JSON.parse(localStorage.getItem(`logs_${currentCatKey}`) || '[]');
+        const container = document.getElementById('logList');
+        
+        container.innerHTML = logs.map(l => {
+            const costDisplay = (l.cost && l.cost > 0) 
+                ? `<span style="color:#fbbf24; font-weight:bold; margin-left:8px;">$${Number(l.cost).toFixed(2)} AUD</span>` 
+                : '';
+
+            const sugText = localizeOption(l.suggested);
+            const actText = localizeOption(l.actual);
+
+            const detailText = cat.hasActualSelection 
+                ? `${t.rolledWord} [${l.num}]: ${sugText}<br><span style="color:#c084fc">${t.actualWord}: <strong>${actText}</strong></span> ${costDisplay}`
+                : `${t.rolledWord} [${l.num}]: <strong style="color:#fbbf24">${sugText}</strong>`;
+
+            return `
+                <li class="log-item">
+                    <div>${detailText}</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${l.date}</div>
+                </li>
+            `;
+        }).join('');
+    }
+
+    // --- Calendar Functions ---
+    function prevMonth() {
+        currentCalMonth--;
+        if (currentCalMonth < 0) {
+            currentCalMonth = 11;
+            currentCalYear--;
+        }
+        renderCalendar();
+    }
+
+    function nextMonth() {
+        currentCalMonth++;
+        if (currentCalMonth > 11) {
+            currentCalMonth = 0;
+            currentCalYear++;
+        }
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        const t = i18n[currentLang];
+        if (currentLang === 'en') {
+            document.getElementById('calendarMonthTitle').innerText = `${t.months[currentCalMonth]} ${currentCalYear}`;
+        } else {
+            document.getElementById('calendarMonthTitle').innerText = `${currentCalYear}年 ${t.months[currentCalMonth]}`;
+        }
+        
+        const logs = JSON.parse(localStorage.getItem(`logs_${currentCatKey}`) || '[]');
+        const logMap = {};
+        let monthlyTotal = 0;
+
+        logs.forEach(l => {
+            logMap[l.date] = l;
+            const [y, m] = l.date.split('-').map(Number);
+            if (y === currentCalYear && m === (currentCalMonth + 1)) {
+                monthlyTotal += (l.cost || 0);
+            }
+        });
+
+        document.getElementById('calendarSummary').innerText = `${t.monthlyTotal}${monthlyTotal.toFixed(2)} AUD`;
+
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+
+        t.weekDays.forEach(w => {
+            const head = document.createElement('div');
+            head.className = 'calendar-day-head';
+            head.innerText = w;
+            grid.appendChild(head);
+        });
+
+        const firstDayIndex = new Date(currentCalYear, currentCalMonth, 1).getDay();
+        const totalDays = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
+
+        for (let i = 0; i < firstDayIndex; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-day-cell empty';
+            grid.appendChild(emptyCell);
+        }
+
+        const todayStr = getTodayString();
+
+        for (let d = 1; d <= totalDays; d++) {
+            const dateStr = `${currentCalYear}-${String(currentCalMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day-cell';
+            
+            if (dateStr === todayStr) cell.classList.add('today');
+
+            const logItem = logMap[dateStr];
+            let contentHtml = `<span class="day-num">${d}</span>`;
+
+            if (logItem) {
+                cell.classList.add('has-data');
+                const foodName = localizeOption(logItem.actual || logItem.suggested || '');
+                const cost = logItem.cost ? `$${Number(logItem.cost).toFixed(2)}` : '';
+
+                contentHtml += `<span class="day-food" title="${foodName}">${foodName}</span>`;
+                if (cost) {
+                    contentHtml += `<span class="day-cost">${cost}</span>`;
+                }
+            }
+
+            cell.innerHTML = contentHtml;
+            grid.appendChild(cell);
+        }
+    }
+
+    // --- Rules Editor Logic ---
+    function renderRulesEditor() {
+        const t = i18n[currentLang];
+        const container = document.getElementById('rulesContainer');
+        container.innerHTML = '';
+        const rules = categories[currentCatKey].rules;
+
+        rules.forEach((rule, idx) => {
+            const color = palette[idx % palette.length];
+            const row = document.createElement('div');
+            row.className = 'rule-row';
+            row.innerHTML = `
+                <div class="color-dot" style="background-color: ${color};"></div>
+                <input type="number" value="${rule.min}" onchange="updateRuleMemory(${idx}, 'min', this.value)">
+                <span style="font-size:0.8rem; color:var(--text-muted);">${t.toWord}</span>
+                <input type="number" value="${rule.max}" onchange="updateRuleMemory(${idx}, 'max', this.value)">
+                <input type="text" value="${localizeOption(rule.result)}" onchange="updateRuleMemory(${idx}, 'result', this.value)">
+                <button class="btn-sm btn-del" onclick="removeRuleRow(${idx})">${t.delBtn}</button>
+            `;
+            container.appendChild(row);
+        });
+        renderProbBar();
+    }
+
+    function updateRuleMemory(idx, field, val) {
+        if (field === 'min' || field === 'max') val = Number(val);
+        categories[currentCatKey].rules[idx][field] = val;
+        renderProbBar();
+    }
+
+    function addRuleRow() {
+        const rules = categories[currentCatKey].rules;
+        rules.push({ min: 0, max: 0, result: i18n[currentLang].newOptionDefault });
+        autoDistributeWeights(rules, categories[currentCatKey].maxNum);
+        renderRulesEditor();
+        renderPieChart();
+    }
+
+    function removeRuleRow(idx) {
+        const rules = categories[currentCatKey].rules;
+        rules.splice(idx, 1);
+        autoDistributeWeights(rules, categories[currentCatKey].maxNum);
+        renderRulesEditor();
+        renderPieChart();
+    }
+
+    function rebalanceWeightsUI() {
+        const rules = categories[currentCatKey].rules;
+        if (rules.length === 0) return;
+        autoDistributeWeights(rules, categories[currentCatKey].maxNum);
+        renderRulesEditor();
+        renderPieChart();
+    }
+
+    function validateRules(rules, targetMax = 100) {
+        const isEn = currentLang === 'en';
+        if (!rules || rules.length === 0) {
+            return { valid: false, msg: isEn ? "Rules cannot be empty!" : "配置不能为空！" };
+        }
+
+        for (let i = 0; i < rules.length; i++) {
+            const r = rules[i];
+            if (isNaN(r.min) || isNaN(r.max)) return { valid: false, msg: isEn ? `Row ${i + 1} has invalid numbers!` : `第 ${i + 1} 行数值不完整！` };
+            if (r.min > r.max) return { valid: false, msg: isEn ? `Row ${i + 1}: Min cannot exceed Max!` : `第 ${i + 1} 行起点不能大于终点！` };
+            if (r.min < 1) return { valid: false, msg: isEn ? `Row ${i + 1}: Min must be >= 1!` : `第 ${i + 1} 行起点不能小于1！` };
+            if (!r.result.trim()) return { valid: false, msg: isEn ? `Row ${i + 1}: Label cannot be empty!` : `第 ${i + 1} 行描述不能为空！` };
+        }
+
+        const sorted = [...rules].sort((a, b) => a.min - b.min);
+        if (sorted[0].min !== 1) return { valid: false, msg: isEn ? "Range must start from 1!" : "必须从 1 开始！" };
+
+        for (let i = 0; i < sorted.length - 1; i++) {
+            if (sorted[i].max >= sorted[i + 1].min) return { valid: false, msg: isEn ? "Overlapping ranges detected!" : "存在区间覆盖重叠！" };
+            if (sorted[i].max + 1 !== sorted[i + 1].min) return { valid: false, msg: isEn ? "Gap detected between ranges!" : "存在区间缺失遗漏！" };
+        }
+
+        if (sorted[sorted.length - 1].max !== targetMax) return { valid: false, msg: isEn ? `Range must end at ${targetMax}!` : `必须覆盖到 ${targetMax}！` };
+
+        return { valid: true };
+    }
+
+    function saveCurrentRules() {
+        const t = i18n[currentLang];
+        const currentCat = categories[currentCatKey];
+        const validation = validateRules(currentCat.rules, currentCat.maxNum);
+
+        if (!validation.valid) {
+            alert(`⚠️ ${validation.msg}`);
+            return;
+        }
+
+        currentCat.rules.sort((a, b) => a.min - b.min);
+        saveData();
+        renderRulesEditor();
+        renderPieChart();
+
+        localStorage.removeItem(`lastRoll_${currentCatKey}`);
+        localStorage.removeItem(`todayTempRoll_${currentCatKey}`);
+        
+        checkTodayStatus();
+        showToast(t.toastRulesSaved);
+    }
+</script>
+
+</body>
+</html>
